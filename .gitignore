@@ -1,5 +1,5 @@
 **/bin/
 **/obj/
-data/
+/data/
 BazosWatchdog/storage/
 .env
