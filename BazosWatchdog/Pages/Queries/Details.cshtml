@@ -1,0 +1,48 @@
+@page "{id:int}"
+@model BazosWatchdog.Pages.Queries.DetailsModel
+@{
+    ViewData["Title"] = Model.Query.Name;
+}
+
+<div class="d-flex justify-content-between align-items-start mb-4">
+    <div>
+        <h1 class="h2 mb-1">@Model.Query.Name</h1>
+        <a href="@Model.Query.SearchUrl" target="_blank" rel="noopener">Open Bazos.cz query</a>
+    </div>
+    <div class="d-flex gap-2">
+        <form method="post" asp-page-handler="Delete" asp-route-id="@Model.Query.Id"
+              onsubmit="return confirm('Delete this query and all of its listings? This cannot be undone.');">
+            <button class="btn btn-outline-danger" type="submit">Delete</button>
+        </form>
+        <a class="btn btn-outline-secondary" asp-page="/Index">Back to queries</a>
+    </div>
+</div>
+
+<p class="text-muted">Listings posted within the last seven days.</p>
+@if (Model.Results.Count == 0)
+{
+    <div class="alert alert-secondary">No recent listings have been found yet.</div>
+}
+else
+{
+    <div class="row row-cols-1 row-cols-md-2 g-3">
+    @foreach (var result in Model.Results)
+    {
+        <div class="col">
+            <article class="card h-100">
+                @if (!string.IsNullOrWhiteSpace(result.ImageUrl))
+                {
+                    <img class="card-img-top listing-image" src="@result.ImageUrl" alt="" referrerpolicy="no-referrer" />
+                }
+                <div class="card-body">
+                    <h2 class="h5"><a href="@result.ListingUrl" target="_blank" rel="noopener">@result.Title</a></h2>
+                    @if (!string.IsNullOrWhiteSpace(result.Price)) { <p class="mb-1"><strong>@result.Price</strong></p> }
+                    @if (!string.IsNullOrWhiteSpace(result.Location)) { <p class="mb-1 text-muted">@result.Location</p> }
+                    @if (!string.IsNullOrWhiteSpace(result.Description)) { <p class="mb-0">@result.Description</p> }
+                </div>
+                <div class="card-footer text-muted">Posted @(result.DatePosted?.ToString("d.M.yyyy") ?? "date unavailable")</div>
+            </article>
+        </div>
+    }
+    </div>
+}

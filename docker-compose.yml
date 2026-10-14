@@ -1,0 +1,14 @@
+services:
+  bazos-watchdog:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    pull_policy: build
+    restart: unless-stopped
+    ports:
+      - "${PORT:-8080}:8080"
+    environment:
+      Ntfy__Url: ${NTFY_URL:-}
+      Database__Path: /data/bazos-watchdog.db
+    volumes:
+      - ./data:/data

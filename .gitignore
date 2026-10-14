@@ -1,0 +1,5 @@
+**/bin/
+**/obj/
+data/
+BazosWatchdog/storage/
+.env

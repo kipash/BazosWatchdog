@@ -1,0 +1,23 @@
+@page
+@model BazosWatchdog.Pages.Queries.CreateModel
+@{
+    ViewData["Title"] = "Add query";
+}
+
+<h1 class="h2 mb-4">Add a Bazos.cz query</h1>
+<form method="post" class="col-md-8">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <div class="mb-3">
+        <label asp-for="Input.Name" class="form-label"></label>
+        <input asp-for="Input.Name" class="form-control" autofocus />
+        <span asp-validation-for="Input.Name" class="text-danger"></span>
+    </div>
+    <div class="mb-3">
+        <label asp-for="Input.SearchUrl" class="form-label"></label>
+        <input asp-for="Input.SearchUrl" class="form-control" type="url" />
+        <div class="form-text">Paste the complete Bazos.cz search URL with all desired filters. Existing results are imported immediately without notifications.</div>
+        <span asp-validation-for="Input.SearchUrl" class="text-danger"></span>
+    </div>
+    <button class="btn btn-primary" type="submit">Start watching</button>
+    <a class="btn btn-outline-secondary" asp-page="/Index">Cancel</a>
+</form>
